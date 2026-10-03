@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            padding-top: 50px;
+        }
+        .form-container {
+            background-color: white;
+            width: 400px;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #aaa;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #successMessage {
+            color: green;
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Registration Form</h2>
+        <form id="registrationForm">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input
+                    type="text"
+                    id="name"
+                    placeholder="Enter your name"
+                >
+                <div id="nameError" class="error"></div>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input
+                    type="text"
+                    id="email"
+                    placeholder="Enter your email"
+                >
+                <div id="emailError" class="error"></div>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input
+                    type="text"
+                    id="phone"
+                    placeholder="Enter 10-digit phone number"
+                >
+                <div id="phoneError" class="error"></div>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter password"
+                >
+                <div id="passwordError" class="error"></div>
+            </div>
+            <button type="submit">
+                Register
+            </button>
+        </form>
+        <div id="successMessage"></div>
+    </div>
+    <script>
+        const form = document.getElementById("registrationForm");
+        form.addEventListener("submit", function(event) {
+            // Prevent page reload
+            event.preventDefault();
+            // Get values
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const phone = document.getElementById("phone").value.trim();
+            const password = document.getElementById("password").value;
+            // Error elements
+            const nameError = document.getElementById("nameError");
+            const emailError = document.getElementById("emailError");
+            const phoneError = document.getElementById("phoneError");
+            const passwordError = document.getElementById("passwordError");
+            const successMessage = document.getElementById("successMessage");
+
+            // Clear previous messages
+            nameError.innerText = "";
+            emailError.innerText = "";
+            phoneError.innerText = "";
+            passwordError.innerText = "";
+            successMessage.innerText = "";
+
+            let isValid = true;
+            // Name validation
+            if (name === "") {
+                nameError.innerText = "Name is required.";
+                isValid = false;
+            }
+            else if (name.length < 3) {
+                nameError.innerText = "Name must contain at least 3 characters.";
+                isValid = false;
+            }
+            // Email validation
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (email === "") {
+                emailError.innerText = "Email is required.";
+                isValid = false;
+
+            }
+            else if (!emailPattern.test(email)) {
+                emailError.innerText = "Enter a valid email address.";
+
+                isValid = false;
+            }
+            // Phone validation
+            const phonePattern = /^[0-9]{10}$/;
+            if (phone === "") {
+                phoneError.innerText =
+                    "Phone number is required.";
+                isValid = false;
+            }
+            else if (!phonePattern.test(phone)) {
+                phoneError.innerText = "Phone number must contain exactly 10 digits.";
+                isValid = false;
+            }
+            // Password validation
+            if (password === "") {
+                passwordError.innerText = "Password is required.";
+                isValid = false;
+            }
+            else if (password.length < 8) {
+                passwordError.innerText = "Password must contain at least 8 characters.";
+                isValid = false;
+            }
+            // Final result
+            if (isValid) {
+                successMessage.innerText = "Registration successful!";
+                form.reset();
+            }
+        });
+    </script>
+</body>
+</html>
